@@ -4,6 +4,7 @@ import com.basic.myspringboot.entity.User;
 import com.basic.myspringboot.exception.BusinessException;
 import com.basic.myspringboot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 //final 인 변수를 초기화하는 생성자를 자동으로 생성해주는 역할을 하는 롬복 어노테이션
 @RequestMapping("/api/users")
+@Profile("test")
 public class UserRestController {
     private final UserRepository userRepository;
 
@@ -77,9 +79,8 @@ public class UserRestController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         User user = getExistUser(userRepository.findById(id));
         userRepository.delete(user);
-        return ResponseEntity.ok("User가 삭제 되었습니다!"); //status code 200  메세지를 주고싶을 떄
+        return ResponseEntity.ok("User가 삭제 되었습니다!"); //status code 200
         //return ResponseEntity.noContent().build();  //status code 204
     }
-
 
 }
